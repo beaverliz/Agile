@@ -1,6 +1,6 @@
 <?php
 
-define("PATH_TO_PARAMS1", "C:\\xampp\\htdocs\\lottery-project\\local\\db_params.inc");
+define("PATH_TO_PARAMS1", "C:\\xampp\\htdocs\\lottery-project\\Agile\\local\\db_params.inc");
 
 function get_new_lottery_id() {
     include PATH_TO_PARAMS1;
