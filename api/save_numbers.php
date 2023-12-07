@@ -8,8 +8,9 @@ $number = $_REQUEST["number"];
 $lottery_id = get_new_lottery_id();
 insert_number($lottery_id, $number);
 
+$number_amount = 3;
 $random_numbers = array();
-for ($i = 0; $i < 3; $i++) {
+for ($i = 0; $i < $number_amount; $i++) {
     $random_numbers[] = rand(100000, 999999);
 }
 insert_generated_numbers($lottery_id, $random_numbers);
