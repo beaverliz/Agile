@@ -1,0 +1,18 @@
+#number {
+    padding: 5px;
+    margin: 10px 0;
+    width: 200px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #b8261e;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #821a0d;
+}
+#image-container {
+    padding: 20px 0;
+}

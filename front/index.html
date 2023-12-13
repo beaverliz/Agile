@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Угадывание чисел</title>
+    <script>
+    async function get_number() {
+        let promise = new Promise((resolve) => {
+            var inputNumber = document.getElementById('number').value;
+            var url = `../api/save_numbers.php?number=${inputNumber}`;
+            var xhr = new XMLHttpRequest;
+            xhr.open("GET", url);
+            xhr.onload = function () {
+                let data = JSON.parse(xhr.responseText);
+                $("h2.id_number").text(`Id вашего лотерейного билета: ${data[0]}`);
+                resolve(data[0])
+            }
+            xhr.send();
+        })
+        return promise
+    }
+    async function compare_numbers(lottery_id) {
+        let promise = new Promise((resolve) => {
+            var inputNumber = document.getElementById('number').value;
+            var url = `../api/compare_numbers.php?number=${inputNumber}&lottery=${lottery_id}`;
+            var xhr = new XMLHttpRequest;
+            xhr.open("GET", url);
+            xhr.onload = function () {
+                let data = JSON.parse(xhr.responseText);
+                resolve(data)
+            }
+            xhr.send();
+        })
+        return promise
+    }
+    async function get_cluster(lottery_id) {
+        let promise = new Promise((resolve) => {
+            var url = `../api/clustering.php?lottery=${lottery_id}`;
+            var xhr = new XMLHttpRequest;
+            xhr.open("GET", url);
+            xhr.onload = function () {
+                let data = JSON.parse(xhr.responseText);
+                resolve(data)
+            }
+            xhr.send();
+        })
+        return promise
+    }
+
+    async function show_all() {
+            var loteryNumber = await get_number()
+            var data_n_m = await compare_numbers(loteryNumber)
+            var path = await get_cluster(loteryNumber)
+            console.log(path)
+            $('#my_clust').attr('src', path);
+        }
+
+
+    </script>
+</head>
+<body>
+        <h1>Угадывание чисел</h1>
+        <input type="text" id="number" placeholder="Введите 6-и значное число" pattern="[0-9]{6}" title="Пожалуйста, введите шестизначное число (6 цифр)" required>
+        <button onclick="show_all()">Угадайте число</button>
+        <h2 class="id_number">Id вашего лотерейного билета:</h2>
+        <div id="image-container">
+            <img id="my_clust" src="">
+        </div>
+</body>
+</html>
